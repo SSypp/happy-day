@@ -46,26 +46,30 @@
                 }
             },
             methods: {
+                //点击上一张
                 handlePre() {
                     this.currentIndex--;
                     if (this.currentIndex === -1) this.currentIndex = 3;
 
                 },
+                //点击下一张
                 handleNext() {
                     this.currentIndex++;
                     if (this.currentIndex === this.images.length) this.currentIndex = 0;
 
                 },
-
+                //自动播放
                 handleAutoPlay(time) {
                     this.timer = setInterval(this.handleNext, time)
                 },
+                //暂停播放
                 handleStop() {
                     clearInterval(this.timer)
                 }
             },
             mounted() {
-
+                //页面加载自动播放
+                this.handleAutoPlay(2000)
             },
         })
     </script>
