@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易音乐播放器</title>
+</head>
+<style>
+    ul {
+        list-style: none;
+        cursor: pointer;
+    }
+
+    .active {
+        color: aqua;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <audio :src='musicData[currentIndex].songSrc' controls autoplay @ended="handleAutoNext"></audio>
+        <ul>
+            <li @click="handelNext(index)" v-for="(item,index) of musicData" :key="index"
+                :class='{active:currentIndex == index}'>
+                <p>歌名-{{item.songName}}</p>
+                <p>歌手-{{item.singerName}}</p>
+            </li>
+        </ul>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        const musicData = [{
+                id: 1,
+                singerName: "程响",
+                songName: "程响-世界这么大还是遇见你",
+                songSrc: './static/程响-世界这么大还是遇见你.mp3'
+            },
+            {
+                id: 2,
+                singerName: "张杰",
+                songName: "张杰 - 直到世界尽头",
+                songSrc: "./static/张杰 - 直到世界尽头.mp3"
+            },
+            {
+                id: 3,
+                singerName: "张叶蕾",
+                songName: "张叶蕾 - 还是分开",
+                songSrc: "./static/张叶蕾 - 还是分开.mp3"
+            },
+            {
+                id: 4,
+                singerName: "李常超",
+                songName: "李常超 - 盗墓笔记·十年人间",
+                songSrc: "./static/李常超 - 盗墓笔记·十年人间.mp3"
+            },
+            {
+                id: 5,
+                singerName: "王茗",
+                songName: "王茗 - 大眠 (男声版)",
+                songSrc: "./static/王茗 - 大眠 (男声版).mp3"
+            }
+        ]
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    musicData: [],
+                    currentIndex: 0
+                }
+            },
+            methods: {
+                handelNext(index) {
+                    this.currentIndex = index
+                },
+                handleAutoNext() {
+                    this.currentIndex++
+                    if (this.currentIndex == this.musicData.length) {
+                        this.currentIndex = 0
+                    }
+                }
+            },
+            created() {
+                this.musicData = musicData
+            },
+        })
+    </script>
+</body>
+
+</html>
