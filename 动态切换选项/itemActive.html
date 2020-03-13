@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #app {
+        width: 600px;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        justify-content: space-around;
+        cursor: pointer;
+    }
+
+    .active {
+        color: red;
+        padding-bottom: 4px;
+        border-bottom: 2px solid red;
+
+    }
+
+    .active:hover {}
+</style>
+
+<body>
+    <div id="app">
+        <span @click="handleChange(index)" v-for="(item,index) of categoryList" :key="item.id"
+            :class="{active:index == currentIndex}">{{item.name}}</span>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    categoryList: [],
+                    currentIndex: 0
+                }
+            },
+            methods: {
+                handleChange(index) {
+                    this.currentIndex = index
+                }
+            },
+            mounted() {
+                $.ajax({
+                    url: "https://www.luffycity.com/api/v1/course_sub/category/list/?belong=1",
+                    method: 'get',
+                    success: (res) => {
+                        if (res.error_no === 0) {
+                            // console.log(res.data)
+                            const obj = {
+                                belong: 1,
+                                category: 0,
+                                hide: false,
+                                id: 14,
+                                name: "全部"
+                            }
+                            res.data.unshift(obj)
+                            this.categoryList = res.data
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error)
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
