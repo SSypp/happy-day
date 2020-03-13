@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <img :src="images[currentIndex].imgSrc" alt="">
+        <br>
+        <button id="pre" @click="handlePre">上一张</button>
+        <button id="next" @click="handleNext">下一张</button>
+        <button id="next" @click="handleAutoPlay(2000)">自动播放</button>
+        <button id="next" @click="handleStop">暂停播放</button>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    timer: null,
+                    currentIndex: 0,
+                    images: [{
+                            id: 1,
+                            imgSrc: "./images/1.jpg"
+                        },
+                        {
+                            id: 2,
+                            imgSrc: "./images/2.jpg"
+                        },
+                        {
+                            id: 3,
+                            imgSrc: "./images/3.jpg"
+                        },
+                        {
+                            id: 4,
+                            imgSrc: "./images/4.jpg"
+                        }
+                    ]
+
+                }
+            },
+            methods: {
+                handlePre() {
+                    this.currentIndex--;
+                    if (this.currentIndex === -1) this.currentIndex = 3;
+
+                },
+                handleNext() {
+                    this.currentIndex++;
+                    if (this.currentIndex === this.images.length) this.currentIndex = 0;
+
+                },
+
+                handleAutoPlay(time) {
+                    this.timer = setInterval(this.handleNext, time)
+                },
+                handleStop() {
+                    clearInterval(this.timer)
+                }
+            },
+            mounted() {
+
+            },
+        })
+    </script>
+</body>
+
+</html>
