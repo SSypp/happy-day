@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>破浪进度</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+        }
+
+        .shandow {
+            background: rgba(255, 255, 255, 0.9);
+            width: 100%;
+            height: 100%;
+        }
+
+        .waterBox {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            /* background-color: aqua; */
+        }
+
+        .progress_container {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .loading {
+            background-color: #EAF8FF;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        img {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            transition: top 0.2s;
+        }
+
+        h5 {
+            font-weight: normal;
+            width: 100%;
+            height: 20;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+            text-shadow: #1d7cb7 1px 0 0, #1d7cb7 0 1px 0, #1d7cb7 -1px 0 0, #1d7cb7 0 -1px 0;
+            color: #fff;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 波浪进度条 -->
+        <div class="waterBox">
+            <div class="shandow"></div>
+            <div class="progress_container">
+                <div class="loading">
+                    <img src="./images/water.png" :style="{left: imgLeft + 'px', top: imgTop + '%'}" />
+                    <h5>{{rateValue}}%</h5>
+                </div>
+                <button @click="handleClick">开始</button>
+            </div>
+
+        </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    imgLeft: 0,
+                    imgTop: 100,
+                    rateValue: 0
+
+                }
+            },
+            methods: {
+                getRndInteger(min, max) {
+                    return Math.floor(Math.random() * (max - min)) + min;
+                },
+                startLoading() {
+                    imgMoveTimer = setInterval(() => {
+                        if (this.imgLeft > 0) {
+                            this.imgLeft = --this.imgLeft;
+                        } else {
+                            this.imgLeft = 0;
+                        }
+                    }, 50);
+                    timer = setInterval(() => {
+                        if (this.rateValue <= 94) {
+                            let count = this.getRndInteger(1, 3);
+                            this.rateValue = count +
+                                this.rateValue;
+                            this.imgTop = this.imgTop - count;
+                        } else {
+                            clearInterval(timer);
+                        }
+                    }, 700);
+                },
+                endLoading() {
+                    // this.isShow = false;
+                    this.imgLeft = 0;
+                    this.imgTop = 100;
+                    this.rateValue = 0;
+                    clearInterval(imgMoveTimer);
+                    clearInterval(timer);
+                },
+                handleClick() {
+                    this.startLoading()
+                    if (rateValue == 94) {
+                        this.endLoading()
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
