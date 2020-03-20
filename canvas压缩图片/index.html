@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .uploadBox {
+        position: relative;
+        width: 40px;
+    }
+
+    #file {
+        opacity: 0;
+        z-index: 100;
+        display: block;
+        width: 100%;
+        height: 40px;
+    }
+
+    .upload {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas压缩图片</title>
+</head>
+
+<body>
+    <div class="uploadBox">
+        <input type="file" id="file">
+        <label for="file">
+            <img class="upload" src="./icon/upload.png" alt="">
+        </label>
+    </div>
+
+
+
+    <div id="images"></div>
+    <!-- //实现思路 -->
+    <!-- 1.获取input的file
+    2.使用fileReader()将图片转为base64
+    3.使用canvas读取base64并降低分辨率
+    4.把canvas数据转换成blob对象
+    5.把blob对象转file对象
+    6.完成压缩 -->
+    <script>
+        const {
+            log
+        } = console
+        document.getElementById("file").addEventListener('change', function (e) {
+            // log(e.target.files[0])
+            let fileObj = e.target.files[0]
+            // let _that = this;
+            //调用压缩图片
+            compressFile(fileObj, files => {
+                // document.getElementById('images').append(files)
+                let reader = new FileReader()
+                reader.readAsDataURL(files)
+                reader.onload = function (e) {
+                    let src = e.target.result
+                    let img = document.createElement('img')
+                    img.src = src
+                    // log(img)
+                    document.getElementById('images').appendChild(img)
+                }
+            })
+        })
+        /*
+            压缩图片
+        */
+        function compressFile(file, callback) {
+            let fileObj = file;
+            let reader = new FileReader()
+            reader.readAsDataURL(fileObj) //转base64
+            // log(reader)
+            reader.onload = function (e) {
+                let image = new Image() //新建一个img标签（还没嵌入DOM节点)
+                image.src = e.target.result
+                image.onload = function () {
+                    let canvas = document.createElement('canvas'),
+                        context = canvas.getContext('2d'),
+                        imageWidth = image.width / 5, //压缩后图片的大小
+                        imageHeight = image.height / 5,
+                        data = ''
+                    canvas.width = imageWidth
+                    canvas.height = imageHeight
+                    context.drawImage(image, 0, 0, imageWidth, imageHeight)
+                    data = canvas.toDataURL('image/jpeg') // 输出压缩后的base64
+                    // log(data)
+                    let arr = data.split(','),
+                        mime = arr[0].match(/:(.*?);/)[1], // 转成blob
+                        bstr = atob(arr[1]),
+                        n = bstr.length,
+                        u8arr = new Uint8Array(n);
+                    // log(mime)
+                    // log(bstr)
+                    // log(n)
+                    // log(u8arr)
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    let files = new window.File([new Blob([u8arr], {
+                        type: mime
+                    })], 'test.jpeg', {
+                        type: 'image/jpeg'
+                    })
+                    // 转成file
+                    callback(files)
+
+                }
+
+            }
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组操作</title>
+</head>
+
+<body>
+    <script>
+        // 数组操作的方法
+        const arr = [1, 2, 3, 4, 5, 6]
+        const {
+            log
+        } = console
+
+        const new_arr = ["a", "b", "c"]
+        //shift 删掉数组的第一个元素，并返回其值
+        // log(arr.shift()) //1
+
+        //concat 用于连接两个或多个数组,并返回一个新数组，新数组是将参数添加 到原数组中构成的
+        //log(arr.concat(new_arr)) //[1, 2, 3, 4, 5, 6, "a", "b", "c"]
+
+        //join用于把数组中的所有元素放入一个字符串。元素是通过指定的分隔符 进行分隔的
+        //log(arr.join("")) //123456
+
+        // pop() 方法：用于删除并返回数组的最后一个(删除元素)元素,如果数组为空则返回 undefined ,把数组长度减 1
+        // log(arr.pop()) //6
+
+        // push() 方法：可向数组的末尾添加一个或多个元素，并返回新的长度，（用来改变数组长度）
+        // log(arr.push(1)) //7长度
+        // log(arr)
+
+        // reverse() ：方法用于颠倒数组中元素的顺
+        // log(arr.reverse()) [6, 5, 4, 3, 2, 1]
+
+        // slice() 方法：可从已有的数组中返回选定的元素。slice(开始截取位置，结束截取位置)
+        // log(arr.slice(0,3)) (3) [1, 2, 3]
+
+        //  splice() ：方法向/从数组中添加/删除项目，然后返回被删除的项目
+        // log(arr.splice(5, 1)) [6]
+        // log(arr) [1, 2, 3, 4, 5]
+
+        //unshif：将参数添加到原数组开头，并返回数组的长度
+        // log(arr.unshift(0)) 7
+        // log(arr) [0, 1, 2, 3, 4, 5, 6]
+
+        // Sort: 按指定的参数对数组进行排序
+        // log(arr.sort((a, b) => b - a))
+    </script>
+</body>
+
+</html>

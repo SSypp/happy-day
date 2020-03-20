@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function foo() {
+        //     let a = 2;
+
+        //     function bar() {
+        //         console.log(a);
+        //     }
+
+        //     return bar;
+        // }
+
+        // let baz = foo();
+
+        // baz();
+        //  baz;
+        // for (var i = 0; i < 5; i++) {
+        //     ((j) => setTimeout(() => {
+        //         console.log(j);
+        //     }, 1000 * i))(i)
+        // }
+        //买笔
+        function buy() {
+            console.log("开始买笔");
+            var p = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    console.log("买了笔芯");
+                    resolve("数学作业");
+                }, 1000);
+            });
+            return p;
+        }
+        //写作业
+        function work(data) {
+            console.log("开始写作业：" + data);
+            var p = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    console.log("写完作业");
+                    resolve("作业本");
+                }, 1000);
+            });
+            return p;
+        }
+
+        function out(data) {
+            console.log("开始上交：" + data);
+            var p = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    console.log("上交完毕");
+                    resolve("得分：A");
+                }, 1000);
+            });
+            return p;
+        }
+        /* 不建议使用这种方式
+        buy().then(function (data) {
+            // console.log(data)
+            return work(data);
+        }).then(function (data) {
+            // console.log(data)
+            return out(data);
+        }).then(function (data) {
+            // console.log(data)
+            console.log(data);
+        });*/
+
+        //推荐这种简化的写法
+        buy().then(work).then(out).then(function (data) {
+            console.log(data);
+        });
+
+
+
+        //   var promise = new Promise(function(resolve,reject){
+        //   $.ajax({
+        //   url:'/api/poisearch.json',
+        //   method:'get',
+        //   datatype:'json',
+        //   success:(res) =>{
+        //   resolve(res)
+        //   },
+        //   error:(err)=>{
+        //   reject(err)
+        //   }
+        //   });
+        //   });
+
+        //   promise.then(function(res){
+        //   return res.data
+        //   }).then(function(data){
+        //   return data.result;
+        //   }).then(function(result){
+        //   console.log(result)
+        //   });
+
+        //   //推荐使用箭头函数简写成,极大提升了代码的简洁性和可读性
+        //   promise.then(res => res.data).then(data => data.result).then(result => console.log(result));
+    </script>
+</body>
+
+</html>

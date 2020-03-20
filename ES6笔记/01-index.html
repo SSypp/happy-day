@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6笔记</title>
+</head>
+
+<body>
+    <script>
+        /*
+        主要知识点
+        1.let命令
+        2.块级作用域
+        3.const命令
+        4.顶层对象的属性
+        5.globalThis对象
+    */
+        // 1.let命令
+        // console.log(a); 
+        // {
+        //     let a = 10;
+        // }
+        // console.log(a)
+        // let计数器
+        // for (let i = 0; i < 10; i++) {
+        //     console.log(i)
+        // }
+        // console.log(i)
+        // var a = [];
+        // for (var i = 0; i < 10; i++) {
+        //     a[i] = function () {
+        //         console.log(i);
+        //     };
+        // }
+        // a[6](); // 10
+
+        // 数组的结构赋值
+        // let s = new Set(['a', 'b', 'c']);
+        // for (let i of x) {
+        //     console.log(i)
+        // }
+        // let [x, y, z] = s
+        // console.log(x)
+        // console.log(y)
+        // console.log(z)
+        // const {
+        //     log
+        // } = console;
+        // log('hello') // hello
+
+        // const node = {
+        //     loc: {
+        //         start: {
+        //             line: 1,
+        //             column: 5
+        //         }
+        //     }
+        // };
+
+        // let {
+        //     loc,
+        //     loc: {
+        //         start
+        //     },
+        //     loc: {
+        //         start: {
+        //             line
+        //         }
+        //     }
+        // } = node;
+        // console.log(loc, start, line)
+        // let obj = {};
+        // let arr = [];
+
+        // ({
+        //     foo: obj.prop,
+        //     bar: arr[0]
+        // } = {
+        //     foo: 123,
+        //     bar: true
+        // });
+
+        // console.log(obj) // {prop:123}
+        // console.log(arr) // [true]
+        // let {
+        //     foo: {
+        //         bar
+        //     }
+        // } = {
+        //     baz: 'baz'
+        // };
+        // console.log(foo);
+
+        const obj1 = {};
+        const obj2 = {
+            foo: 'bar'
+        };
+        Object.setPrototypeOf(obj1, obj2);
+
+        const {
+            foo
+        } = obj1;
+        foo // "bar"
+    </script>
+
+</body>
+
+</html>

@@ -16,6 +16,7 @@ export default {
   },
   methods: {
     initWave(ref) {
+      // this.log("hello");
       let _this = this;
       setTimeout(() => {
         _this.chart = this.$echarts.init(_this.$refs[ref]);
